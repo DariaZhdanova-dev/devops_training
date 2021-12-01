@@ -1,0 +1,27 @@
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ~
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd -
+/home/dasha2
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd /home/dasha2
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd $HOME
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ~/
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd /home/$USER
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ../home/dasha2
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ../home/$USER
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd $OLDPWD/
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd /home/$LOGNAME
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ../home/$LOGNAME
+[dasha2@localhost ~]$ cd /mnt
+[dasha2@localhost mnt]$ cd ~dasha2
