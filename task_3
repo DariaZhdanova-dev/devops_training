@@ -1,0 +1,25 @@
+[dasha2@localhost ~]$ head -n 7 /etc/yum.conf
+[main]
+cachedir=/var/cache/yum/$basearch/$releasever
+keepcache=0
+debuglevel=2
+logfile=/var/log/yum.log
+exactarch=1
+obsoletes=1
+[dasha2@localhost ~]$ tail -n 2 /etc/fstab
+UUID=5598558d-4d1b-4db4-ae7f-0915af1c7561 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
+[dasha2@localhost ~]$ wc -l /etc/fstab
+11 /etc/fstab
+[dasha2@localhost ~]$ head -n 13 /etc/fstab
+
+#
+# /etc/fstab
+# Created by anaconda on Wed Dec  1 16:55:25 2021
+#
+# Accessible filesystems, by reference, are maintained under '/dev/disk'
+# See man pages fstab(5), findfs(8), mount(8) and/or blkid(8) for more info
+#
+/dev/mapper/centos-root /                       xfs     defaults        0 0
+UUID=5598558d-4d1b-4db4-ae7f-0915af1c7561 /boot                   xfs     defaults        0 0
+/dev/mapper/centos-swap swap                    swap    defaults        0 0
