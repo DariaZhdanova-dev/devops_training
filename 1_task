@@ -1,0 +1,39 @@
+[dasha2@localhost ~]$ ls -R /usr/share/man/man{1..7}/*config*
+ls: cannot access /usr/share/man/man2/*config*: No such file or directory
+ls: cannot access /usr/share/man/man3/*config*: No such file or directory
+ls: cannot access /usr/share/man/man4/*config*: No such file or directory
+ls: cannot access /usr/share/man/man6/*config*: No such file or directory
+ls: cannot access /usr/share/man/man7/*config*: No such file or directory
+/usr/share/man/man1/pkg-config.1.gz      /usr/share/man/man5/ssh_config.5.gz
+/usr/share/man/man5/config.5ssl.gz       /usr/share/man/man5/sshd_config.5.gz
+/usr/share/man/man5/config-util.5.gz     /usr/share/man/man5/x509v3_config.5ssl.gz
+/usr/share/man/man5/selinux_config.5.gz
+[dasha2@localhost ~]$ ls -R /usr/share/man/man{1,7}/*system*
+/usr/share/man/man1/systemctl.1.gz
+/usr/share/man/man1/systemd.1.gz
+/usr/share/man/man1/systemd-analyze.1.gz
+/usr/share/man/man1/systemd-ask-password.1.gz
+/usr/share/man/man1/systemd-bootchart.1.gz
+/usr/share/man/man1/systemd-cat.1.gz
+/usr/share/man/man1/systemd-cgls.1.gz
+/usr/share/man/man1/systemd-cgtop.1.gz
+/usr/share/man/man1/systemd-delta.1.gz
+/usr/share/man/man1/systemd-detect-virt.1.gz
+/usr/share/man/man1/systemd-escape.1.gz
+/usr/share/man/man1/systemd-firstboot.1.gz
+/usr/share/man/man1/systemd-firstboot.service.1.gz
+/usr/share/man/man1/systemd-inhibit.1.gz
+/usr/share/man/man1/systemd-machine-id-commit.1.gz
+/usr/share/man/man1/systemd-machine-id-setup.1.gz
+/usr/share/man/man1/systemd-notify.1.gz
+/usr/share/man/man1/systemd-nspawn.1.gz
+/usr/share/man/man1/systemd-path.1.gz
+/usr/share/man/man1/systemd-run.1.gz
+/usr/share/man/man1/systemd-tty-ask-password-agent.1.gz
+/usr/share/man/man7/lvmsystemid.7.gz
+/usr/share/man/man7/systemd.directives.7.gz
+/usr/share/man/man7/systemd.generator.7.gz
+/usr/share/man/man7/systemd.index.7.gz
+/usr/share/man/man7/systemd.journal-fields.7.gz
+/usr/share/man/man7/systemd.special.7.gz
+/usr/share/man/man7/systemd.time.7.gz
