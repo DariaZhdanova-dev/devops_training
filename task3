@@ -1,0 +1,19 @@
+#!/bin/bash
+
+VAR=`cat file1.txt`
+ls $VAR
+
+echo FIRST DOP:
+
+echo "Dirs num: $(ls -l $VAR | grep "^d" | wc -l)"
+echo "Files num: $(ls -l $VAR | grep "^-" | wc -l)"
+
+echo SECOND DOP:
+
+for entry in $(cat file1.txt)
+do
+echo $entry:
+ls $entry
+echo "Dirs num: $(ls -l $entry | grep "^d" | wc -l)"
+echo "Files num: $(ls -l $entry | grep "^-" / | wc -l)"
+done
