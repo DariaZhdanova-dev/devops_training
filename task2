@@ -21,15 +21,18 @@ dasha@dasha-VirtualBox:/home$ groups lesly
 lesly : lesly students
 dasha@dasha-VirtualBox:/home$ sudo chgrp -R students /home/students
 dasha@dasha-VirtualBox:/home$ sudo chmod -R 2770 /home/students
-root@dasha-VirtualBox:/home/students# chmod o+t /home/students 
-
+root@dasha-VirtualBox:/home# ls -l
+total 20
+drwxr-xr-x 19 dasha  dasha    4096 дек 14 22:27 dasha
+drwxrws---  2 root   students 4096 дек 14 22:46 students
 
 ## testing
 dasha@dasha-VirtualBox:/home$ su lesly
-$ ls -l students/
-total 0
--rw-r--r-- 1 root  students 0 дек 14 17:25 newfile.txt
--rw-rw-r-- 1 lesly students 0 дек 14 17:24 new.txt
+$ ls
+newfile
+$ echo write > newfile
+$ cat newfile
+write
 $ exit
 
 ## external access denied
