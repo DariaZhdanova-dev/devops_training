@@ -1,0 +1,38 @@
+dasha@dasha-VirtualBox:~/new$ sudo groupadd -g 4000 sales
+dasha@dasha-VirtualBox:~/new$ cat /etc/group | grep sales
+sales:x:4000:
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Alice
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Bob
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Eve
+dasha@dasha-VirtualBox:~/new$ sudo passwd Alice 
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~/new$ sudo passwd Bob
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~/new$ sudo passwd Eve
+New password: 
+Retype new password: 
+passwd: password updated successfully
+
+## main part with users manipulation 
+#!/bin/bash
+
+DATE_EXPIRE=`date +%F --date='+90 days'`
+echo $DATE_EXPIRE
+USERS_IN_SALES=`awk 'BEGIN {FS=":"} $4~/4000/ {print $1}' /etc/passwd`
+echo $USERS_IN_SALES
+for i in $USERS_IN_SALES
+do
+chage -d 0 $i
+usermod -e $DATE_EXPIRE $i
+if [ "$i" == "Bob" ]
+then
+        chage -M 15 $i
+else
+        chage -M 30 $i
+fi
+done
+
