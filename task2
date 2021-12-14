@@ -1,0 +1,39 @@
+dasha@dasha-VirtualBox:/home$ sudo mkdir students
+dasha@dasha-VirtualBox:/home$ sudo groupadd students
+dasha@dasha-VirtualBox:/home$ sudo useradd -G students glen
+dasha@dasha-VirtualBox:/home$ sudo useradd -G students antony
+dasha@dasha-VirtualBox:/home$ sudo useradd -G students lesly
+dasha@dasha-VirtualBox:/home$ passwd glen
+passwd: You may not view or modify password information for glen.
+dasha@dasha-VirtualBox:/home$ sudo passwd glen
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:/home$ sudo passwd antony
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:/home$ sudo passwd lesly
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:/home$ groups lesly
+lesly : lesly students
+dasha@dasha-VirtualBox:/home$ sudo chgrp -R students /home/students
+dasha@dasha-VirtualBox:/home$ sudo chmod -R 2770 /home/students
+root@dasha-VirtualBox:/home/students# chmod o+t /home/students 
+
+
+## testing
+dasha@dasha-VirtualBox:/home$ su lesly
+$ ls -l students/
+total 0
+-rw-r--r-- 1 root  students 0 дек 14 17:25 newfile.txt
+-rw-rw-r-- 1 lesly students 0 дек 14 17:24 new.txt
+$ exit
+
+## external access denied
+
+dasha@dasha-VirtualBox:/home$ touch students/file.txt 
+touch: cannot touch 'students/file.txt': Permission denied
+
