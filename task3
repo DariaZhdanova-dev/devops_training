@@ -1,0 +1,133 @@
+
+##preparations
+
+dasha@dasha-VirtualBox:~$ sudo groupadd bakerstreet 
+dasha@dasha-VirtualBox:~$ sudo useradd -G bakerstreet holmes
+dasha@dasha-VirtualBox:~$ sudo useradd -G bakerstreet watson
+dasha@dasha-VirtualBox:~$ sudo groupadd scotlandyard
+dasha@dasha-VirtualBox:~$ sudo useradd -G scotlandyard lestrade
+dasha@dasha-VirtualBox:~$ sudo useradd -G scotlandyard gregson
+dasha@dasha-VirtualBox:~$ sudo useradd -G scotlandyard jones
+
+dasha@dasha-VirtualBox:~$ sudo passwd holmes
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~$ sudo passwd watson
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~$ sudo passwd lestrade
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~$ sudo passwd gregson
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~$ sudo passwd jones
+New password: 
+Retype new password: 
+passwd: password updated successfully
+
+dasha@dasha-VirtualBox:/$ sudo mkdir /share && sudo mkdir /share/cases
+dasha@dasha-VirtualBox:/$ cd /share/cases/
+dasha@dasha-VirtualBox:/share/cases$ sudo touch murders.txt moriarty.txt
+
+## ACL managing start
+
+dasha@dasha-VirtualBox:/$ sudo chgrp bakerstreet /share/cases
+dasha@dasha-VirtualBox:/share$ sudo chmod 2770 /share/cases
+root@dasha-VirtualBox:/share/cases# setfacl -m u:jones:rx /share/cases/
+root@dasha-VirtualBox:/share/cases# setfacl -m g:scotlandyard:rwx /share/cases/
+root@dasha-VirtualBox:/share/cases# setfacl -d -m m::rw /share/cases
+root@dasha-VirtualBox:/share/cases# getfacl /share/cases/
+# file: share/cases/
+# owner: root
+# group: bakerstreet
+# flags: -s-
+user::rwx
+user:jones:r-x
+group::rwx
+group:scotlandyard:rwx
+mask::rwx
+other::---
+default:user::rwx
+default:user:jones:r--
+default:group::rwx		#effective:rw-
+default:group:scotlandyard:rw-
+default:mask::rw-
+default:other::---
+
+## test for other user:
+
+dasha@dasha-VirtualBox:/share$ cd cases/
+bash: cd: cases/: Permission denied
+dasha@dasha-VirtualBox:/share$ ls cases/
+ls: cannot open directory 'cases/': Permission denied
+dasha@dasha-VirtualBox:/share$ touch cases/new_file.txt
+touch: cannot touch 'cases/new_file.txt': Permission denied
+
+## test for bakerstreet group 
+
+dasha@dasha-VirtualBox:/share$ sudo su holmes
+$ cd cases
+$ ls
+moriarty.txt  murders.txt  newfile
+$ touch dancing_men.txt
+$ echo prison > moriarty.txt
+$ cat moriarty.txt
+prison
+
+root@dasha-VirtualBox:/share/cases# getfacl dancing_men.txt 
+# file: dancing_men.txt
+# owner: holmes
+# group: bakerstreet
+user::rw-
+user:jones:r--
+group::rwx			#effective:rw-
+group:scotlandyard:rw-
+mask::rw-
+other::---
+
+## test for Jones
+
+dasha@dasha-VirtualBox:/share$ sudo su jones
+$ cd cases
+$ ls
+dancing_men.txt  moriarty.txt  murders.txt
+$ cat moriarty.txt
+prison
+$ echo blabla > moriarty.txt
+sh: 5: cannot create moriarty.txt: Permission denied
+$ touch myfile.txt
+touch: cannot touch 'myfile.txt': Permission denied
+
+## test for scotlanyard's
+
+root@dasha-VirtualBox:/share/cases# su gregson
+$ ls
+dancing_men.txt  moriarty.txt  murders.txt
+$ cat moriarty.txt
+prison
+$ echo James > moriarty.txt
+$ cat moriarty.txt
+James
+$ touch lestrade_notes.txt
+root@dasha-VirtualBox:/share/cases# getfacl lestrade_notes.txt 
+# file: lestrade_notes.txt
+# owner: gregson
+# group: bakerstreet
+user::rw-
+user:jones:r--
+group::rwx			#effective:rw-
+group:scotlandyard:rw-
+mask::rw-
+other::---
+
+root@dasha-VirtualBox:/share/cases# ls -l
+total 4
+-rw-rw----+ 1 holmes  bakerstreet 0 дек 14 21:49 dancing_men.txt
+-rw-rw----+ 1 gregson bakerstreet 0 дек 14 21:58 lestrade_notes.txt
+-rw-rw----+ 1 root    bakerstreet 6 дек 14 21:57 moriarty.txt
+-rw-rw----+ 1 root    bakerstreet 0 дек 14 21:29 murders.txt
