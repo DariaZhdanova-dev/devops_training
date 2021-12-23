@@ -1,0 +1,65 @@
+dasha@dasha-VirtualBox:~/new$ sudo groupadd -g 4000 sales
+dasha@dasha-VirtualBox:~/new$ cat /etc/group | grep sales
+sales:x:4000:
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Alice
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Bob
+dasha@dasha-VirtualBox:~/new$ sudo useradd -g sales Eve
+dasha@dasha-VirtualBox:~/new$ sudo passwd Alice 
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~/new$ sudo passwd Bob
+New password: 
+Retype new password: 
+passwd: password updated successfully
+dasha@dasha-VirtualBox:~/new$ sudo passwd Eve
+New password: 
+Retype new password: 
+passwd: password updated successfully
+
+dasha@dasha-VirtualBox:~$ sudo sed '/^PASS_MAX_DAYS/s/99999/30/' /etc/login.defs > /etc/login.defs
+dasha@dasha-VirtualBox:~$ sudo chage -M 15 Bob
+
+## main part with users manipulation 
+#!/bin/bash
+
+DATE_EXPIRE=`date +%F --date='+90 days'`
+echo $DATE_EXPIRE
+USERS_IN_SALES=`awk 'BEGIN {FS=":"} $4~/4000/ {print $1}' /etc/passwd`
+echo $USERS_IN_SALES
+for i in $USERS_IN_SALES
+do
+chage -d 0 $i
+usermod -e $DATE_EXPIRE $i
+done
+
+## Test before login and forcing change password
+
+dasha@dasha-VirtualBox:~$ sudo chage -l Bob
+Last password change					: password must be changed
+Password expires					: password must be changed
+Password inactive					: password must be changed
+Account expires						: мар 16, 2022
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 15
+Number of days of warning before password expires	: 7
+
+## Test after login and password change
+dasha@dasha-VirtualBox:~$ sudo chage -l Bob
+Last password change					: дек 16, 2021
+Password expires					: дек 31, 2021
+Password inactive					: never
+Account expires						: мар 16, 2022
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 15
+Number of days of warning before password expires	: 7
+
+
+dasha@dasha-VirtualBox:~$ sudo chage -l Alice
+Last password change					: дек 16, 2021
+Password expires					: янв 15, 2022
+Password inactive					: never
+Account expires						: мар 16, 2022
+Minimum number of days between password change		: 0
+Maximum number of days between password change		: 30
+Number of days of warning before password expires	: 7
