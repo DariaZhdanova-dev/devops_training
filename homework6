@@ -1,0 +1,91 @@
+###   TASK 1 ###
+# 1 #
+[dasha@localhost ~]$ ssh Daria_Zhdanova@18.221.144.175
+# 2 #
+[dasha@localhost ~]$ ssh-keygen -f ~/.ssh/hw-5
+# 3 #
+[dasha@localhost ~]$ ssh-copy-id -i ~/.ssh/hw-5 Daria_Zhdanova@18.221.144.175
+# 4 #
+[dasha@localhost ~]$ ssh -i ~/.ssh/hw-5 Daria_Zhdanova@18.221.144.175
+# 5 #
+[dasha@localhost .ssh]$ cat ~/.ssh/config
+Host remotehost
+        Hostname 18.221.144.175
+        User Daria_Zhdanova
+        Identityfile /home/dasha/.ssh/hw-5
+        
+[dasha@localhost .ssh]$ ssh remotehost
+# 6 #
+[Daria_Zhdanova@ip-172-31-33-155 ~]$ curl 172.31.45.237:80
+###  omitted Rick Roll output))) 
+# 7 #
+[dasha@localhost .ssh]$ ssh -i ~/.ssh/hw-5 -N -L 8089:172.31.45.237:80 Daria_Zhdanova@18.221.144.175 
+[4] 1840
+[dasha@localhost .ssh]$ netstat -tnlp
+# now we are listening port 8089 #
+# 8 #
+[dasha@localhost .ssh]$ curl localhost:8089
+##  Rick Roll:  <p class="lead">You are here because you're probably a DevOps courses member. In that case you should open <a href="https://www.youtube.com/watch?v=dQw4w9WgXcQ"> THIS LINK </a></p>
+                </div>
+
+
+###  TASK 2  ###  
+##  1  ##
+
+[root@localhost ~]# timedatectl
+      Local time: Thu 2021-12-23 19:30:48 MSK
+  Universal time: Thu 2021-12-23 16:30:48 UTC
+        RTC time: Thu 2021-12-23 16:30:48
+       Time zone: Europe/Moscow (MSK, +0300)
+     NTP enabled: n/a
+NTP synchronized: no
+ RTC in local TZ: no
+      DST active: n/a
+[root@localhost ~]# timedatectl list-timezones | grep Havana
+America/Havana
+[root@localhost ~]# timedatectl set-timezone America/Havana
+[root@localhost ~]# timedatectl
+      Local time: Thu 2021-12-23 11:32:34 CST
+  Universal time: Thu 2021-12-23 16:32:34 UTC
+        RTC time: Thu 2021-12-23 16:32:34
+       Time zone: America/Havana (CST, -0500)
+     NTP enabled: n/a
+NTP synchronized: no
+ RTC in local TZ: no
+      DST active: no
+ Last DST change: DST ended at
+                  Sun 2021-11-07 00:59:59 CDT
+                  Sun 2021-11-07 00:00:00 CST
+ Next DST change: DST begins (the clock jumps one hour forward) at
+                  Sat 2022-03-12 23:59:59 CST
+                  Sun 2022-03-13 01:00:00 CDT
+                  
+##  2  ## 
+
+[root@localhost ~]# journalctl --since "50 min ago" _UID=81
+-- Logs begin at Thu 2021-12-23 10:38:21 CST, end at Thu 2021-12-23 11:32:34 CST. --
+Dec 23 11:30:01 localhost.localdomain dbus[651]: [system] Activating via systemd: service name='org.freedesktop.timedate
+Dec 23 11:30:01 localhost.localdomain dbus[651]: [system] Successfully activated service 'org.freedesktop.timedate1'
+Dec 23 11:30:45 localhost.localdomain dbus[651]: [system] Activating via systemd: service name='org.freedesktop.timedate
+Dec 23 11:30:45 localhost.localdomain dbus[651]: [system] Successfully activated service 'org.freedesktop.timedate1'
+Dec 23 11:32:34 localhost.localdomain dbus[651]: [system] Activating via systemd: service name='org.freedesktop.timedate
+Dec 23 11:32:34 localhost.localdomain dbus[651]: [system] Successfully activated service 'org.freedesktop.timedate1'
+
+
+##  3  ##
+
+[root@localhost rsyslog.d]# cat auth-errors.conf
+### RULES ###
+
+auth.alert;security.alert               /var/log/auth-errors.log
+[root@localhost rsyslog.d]# systemctl restart rsyslog
+[root@localhost rsyslog.d]# logger -p "auth.emerg" "This is just a test for auth emergency"
+[root@localhost rsyslog.d]# logger -p "auth.alert" "This is just a test for auth alert"
+[root@localhost rsyslog.d]# logger -p "security.alert" "This is just a test for security alert"
+[root@localhost rsyslog.d]# logger -p "security.emerg" "This is just a test for security emergency"
+[root@localhost rsyslog.d]# tail /var/log/auth-errors.log
+
+Dec 23 11:20:46 localhost root: This is just a test for auth emergency
+Dec 23 11:21:06 localhost root: This is just a test for auth alert
+Dec 23 11:21:11 localhost root: This is just a test for security alert
+Dec 23 11:21:15 localhost root: This is just a test for security emergency
