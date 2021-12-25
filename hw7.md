@@ -81,7 +81,7 @@ module_hotfixes=true
 
 ### 1) Check if NGINX repository enabled or not.
 
-[dasha@localhost yum.repos.d]# `yum repolist | grep nginx`
+[dasha@localhost yum.repos.d]# `yum repolist | grep nginx`  
 nginx-stable/7/x86_64   nginx stable repo                                    256  
 
 ### 2) Install NGINX. 
@@ -106,7 +106,7 @@ Dependencies Resolved
 
 ...
 
-Complete!
+Complete!  
 [dasha@localhost yum.repos.d]# `nginx -v`  
 nginx version: nginx/1.20.2
 
@@ -155,7 +155,6 @@ Resolving Dependencies
 Dependencies Resolved  
 ...  
 Complete!    
-
 [dasha@localhost yum.repos.d]# `nginx -v`  
 -bash: /usr/sbin/nginx: No such file or directory  
 
@@ -168,17 +167,7 @@ This system is not registered with an entitlement server. You can use subscripti
 
 ================================================== repo: nginx-stable ==================================================  
 [nginx-stable]  
-async = True  
-bandwidth = 0  
-base_persistdir = /var/lib/yum/repos/x86_64/7  
-baseurl = http://nginx.org/packages/centos/7/x86_64/  
-cache = 0  
-cachedir = /var/cache/yum/x86_64/7/nginx-stable  
-check_config_file_age = True  
-compare_providers_priority = 80  
-cost = 1000  
-deltarpm_metadata_percentage = 100  
-deltarpm_percentage =  
+...  
 enabled = 0  
 ...
 
@@ -313,7 +302,7 @@ Filesystem               Size  Used Avail Use% Mounted on
 > These numbers are different because df and du work differently in case of file deleting and disk space realese. The result of the command du doesn't include the size of the deleting file.
 >  So if there are open descriptors in /proc/ to deleted files, space occupied by them considered as used by df
 
-[root@localhost /]#  `lsof | grep '(deleted)'`
+[root@localhost /]#  `lsof | grep '(deleted)'`   
 firewalld  675         root    8u      REG              253,0      4096    4194373 /tmp/#4194373 (deleted)  
 gmain      675  797    root    8u      REG              253,0      4096    4194373 /tmp/#4194373 (deleted)  
 tuned      969         root    8u      REG              253,0      4096    4194377 /tmp/#4194377 (deleted)  
